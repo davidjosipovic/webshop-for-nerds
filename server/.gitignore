@@ -1,0 +1,12 @@
+# Server dependencies
+/node_modules
+
+# Server build output
+/build
+
+# Environment files
+.env
+
+# IDE or editor specific files
+.idea/
+.vscode/
