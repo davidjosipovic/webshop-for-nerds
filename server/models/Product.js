@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Category = require('./Category');
 
 const Product = sequelize.define('Product', {
   product_id: {
@@ -34,5 +35,7 @@ const Product = sequelize.define('Product', {
   tableName: 'products',
   timestamps: false,
 });
+
+Product.belongsTo(Category, { foreignKey: 'category_id' }); // Establish the association
 
 module.exports = Product;

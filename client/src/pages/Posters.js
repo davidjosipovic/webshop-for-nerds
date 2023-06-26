@@ -5,7 +5,7 @@ const Posters = () => {
         <h1 className="text-3xl font-bold mb-4">Posters</h1>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-lg shadow-md p-4">
-            <img src="https://m.media-amazon.com/images/I/619L6+G1W+L._AC_UF1000,1000_QL80_.jpg" alt="Figure 1" className="w-full mb-4" />
+            <img src={require("../images/GokuFigure.jpg")} alt="Figure 1" className="w-full mb-4" />
             <h2 className="text-lg font-bold mb-2">Figure 1</h2>
             <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
