@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 // Serve static images
-app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
@@ -16,6 +16,7 @@ const userRoutes = require('./routes/userRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);

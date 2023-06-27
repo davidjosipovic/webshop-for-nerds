@@ -9,6 +9,7 @@ import Cart from './pages/Cart';
 import Accessories from './pages/Accessories';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/accessories" element={<Accessories />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/cart" element={<Cart />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
       </Routes>
     </Router>
     <Footer/>
