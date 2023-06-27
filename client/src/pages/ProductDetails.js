@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams,useNavigate  } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 
 const ProductDetails = () => {
-  const { id } = useParams(); // Update the variable name to 'id'
+  const { id } = useParams();
+  const { addToCart } = useContext(CartContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Access the navigate function for navigation
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/products/${id}`); // Use 'id' instead of 'product_id'
+        const response = await fetch(`http://localhost:3001/api/products/${id}`);
 
         if (!response.ok) {
           throw new Error('Failed to fetch product details');
@@ -29,6 +32,11 @@ const ProductDetails = () => {
     fetchProductDetails();
   }, [id]);
 
+  const handleAddToCart = () => {
+    addToCart(product);
+    navigate('/cart'); // Navigate to the cart page after adding an item
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -45,6 +53,9 @@ const ProductDetails = () => {
         <div className="ml-4">
           <p>{product.description}</p>
           <p className="text-lg font-bold mt-4">${product.price}</p>
+          <button onClick={handleAddToCart} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4">
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>

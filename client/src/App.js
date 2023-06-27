@@ -10,10 +10,11 @@ import Accessories from './pages/Accessories';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProductDetails from './pages/ProductDetails';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
-    <>
+    <CartProvider>
      <Navbar/>
     <Router>
       <Routes>
@@ -29,7 +30,7 @@ function App() {
       </Routes>
     </Router>
     <Footer/>
-    </>
+    </CartProvider>
   );
 }
 
