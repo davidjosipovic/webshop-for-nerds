@@ -19,4 +19,7 @@ router.put('/:id', productController.updateProductById);
 // Route for deleting a specific product
 router.delete('/:id', productController.deleteProductById);
 
+// Route for searching products
+router.get('/search', productController.searchProductsByName);
+
 module.exports = router;

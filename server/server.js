@@ -9,7 +9,6 @@ app.use(cors());
 
 // Serve static images
 
-
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const userRoutes = require('./routes/userRoutes');

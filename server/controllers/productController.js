@@ -91,11 +91,32 @@ const deleteProductById = async (req, res) => {
   }
 };
 
+// Function to search products
+const searchProductsByName = async (req, res) => {
+  try {
+    const searchQuery = req.query.q;
+
+    const products = await Product.findAll({
+      where: {
+        name: {
+          $like: `%${searchQuery}%`,
+        },
+      },
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to search for products' });
+  }
+};
+
 // Export the controller functions
 module.exports = {
-  getProductsByCategory,
+  searchProductsByName,
   createProduct,
   getProductById,
   updateProductById,
-  deleteProductById
+  deleteProductById,
+  searchProducts,
 };
