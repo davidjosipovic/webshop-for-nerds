@@ -113,10 +113,10 @@ const searchProductsByName = async (req, res) => {
 
 // Export the controller functions
 module.exports = {
-  searchProductsByName,
+  getProductsByCategory,
   createProduct,
   getProductById,
   updateProductById,
   deleteProductById,
-  searchProducts,
+  searchProductsByName,
 };
