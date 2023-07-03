@@ -52,7 +52,7 @@ const ProductDetails = () => {
         <img src={`http://localhost:3001/images/${product.image_url}`} alt={product.name} className="w-1/3" />
         <div className="ml-4">
           <p>{product.description}</p>
-          <p className="text-lg font-bold mt-4">${product.price}</p>
+          <p className="text-lg font-bold mt-4">{product.price}€</p>
           <button onClick={handleAddToCart} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4">
             Add to Cart
           </button>

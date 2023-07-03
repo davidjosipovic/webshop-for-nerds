@@ -32,7 +32,7 @@ const Cart = () => {
           {cartItems.map((item) => (
             <div key={item.id} className="border border-gray-200 p-4 mb-4">
               <h3 className="text-xl font-bold mb-2">{item.name}</h3>
-              <p className="text-gray-600">Price: {item.price}</p>
+              <p className="text-gray-600">Price: {item.price}€</p>
               <p className="text-gray-600">Quantity: {item.quantity}</p>
               <div className="flex mt-2">
                 <button
