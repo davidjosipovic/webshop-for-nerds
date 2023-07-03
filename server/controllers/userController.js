@@ -12,13 +12,15 @@ const getAllUsers = async (req, res) => {
 
 // Create a new user
 const createUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, email, password, shipping_address, billing_address } = req.body;
 
   try {
     const user = await User.create({
-      name,
+      username,
       email,
       password,
+      shipping_address,
+      billing_address,
     });
 
     res.status(201).json(user);
@@ -47,15 +49,17 @@ const getUserById = async (req, res) => {
 // Update a specific user by ID
 const updateUserById = async (req, res) => {
   const { id } = req.params;
-  const { name, email, password } = req.body;
+  const { username, email, password, shipping_address, billing_address } = req.body;
 
   try {
     const user = await User.findByPk(id);
 
     if (user) {
-      user.name = name;
+      user.username = username;
       user.email = email;
       user.password = password;
+      user.shipping_address = shipping_address;
+      user.billing_address = billing_address;
 
       await user.save();
       res.json(user);
@@ -92,5 +96,3 @@ module.exports = {
   updateUserById,
   deleteUserById,
 };
-
-

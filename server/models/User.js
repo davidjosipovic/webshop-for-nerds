@@ -5,6 +5,7 @@ const User = sequelize.define('User', {
   user_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
+    autoIncrement: true, // Added auto-increment
   },
   username: {
     type: DataTypes.STRING,
@@ -28,7 +29,8 @@ const User = sequelize.define('User', {
   },
   created_at: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: false, // Changed allowNull to false
+    defaultValue: DataTypes.NOW, // Added defaultValue to use current timestamp
   },
 }, {
   tableName: 'users',
