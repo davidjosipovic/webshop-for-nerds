@@ -4,9 +4,36 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add login logic here (e.g., send a request to the server with email and password)
+
+    const credentials = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        const user = await response.json();
+        // Handle successful login
+        console.log('User logged in:', user);
+      } else {
+        // Handle login error
+        const errorData = await response.json();
+        console.log('Login error:', errorData);
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.log('Error:', error);
+    }
   };
 
   return (

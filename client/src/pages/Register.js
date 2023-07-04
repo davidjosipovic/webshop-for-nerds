@@ -7,9 +7,39 @@ const Register = () => {
   const [shippingAddress, setShippingAddress] = useState('');
   const [billingAddress, setBillingAddress] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add registration logic here (e.g., send a request to the server with the form data)
+
+    const newUser = {
+      username,
+      email,
+      password,
+      shipping_address: shippingAddress,
+      billing_address: billingAddress,
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Handle successful registration
+        console.log('User registered:', data);
+      } else {
+        // Handle registration error
+        const errorData = await response.json();
+        console.log('Registration error:', errorData);
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.log('Error:', error);
+    }
   };
 
   return (
