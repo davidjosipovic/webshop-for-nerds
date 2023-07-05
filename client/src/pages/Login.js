@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,7 +15,7 @@ const Login = () => {
     };
 
     try {
-      const response = await fetch('/login', {
+      const response = await fetch('http://localhost:3001/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,9 +24,11 @@ const Login = () => {
       });
 
       if (response.ok) {
-        const user = await response.json();
+        // Update the login status
+        setIsLoggedIn(true);
         // Handle successful login
-        console.log('User logged in:', user);
+        localStorage.setItem('isLoggedIn', true);
+        console.log('User logged in');
       } else {
         // Handle login error
         const errorData = await response.json();
@@ -35,6 +39,27 @@ const Login = () => {
       console.log('Error:', error);
     }
   };
+
+  useEffect(() => {
+    // Check if the user is already logged in
+    const checkLoginStatus = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/check');
+        if (response.ok) {
+          const data = await response.json();
+          setIsLoggedIn(data.isLoggedIn);
+        }
+      } catch (error) {
+        console.log('Error:', error);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+
+  if (isLoggedIn) {
+    return <div>You are already logged in.</div>;
+  }
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -72,6 +97,12 @@ const Login = () => {
             Login
           </button>
         </form>
+        <div className="mt-4 text-center">
+          Don't have an account?{' '}
+          <Link to="/register" className="text-blue-500 font-semibold">
+            Register
+          </Link>
+        </div>
       </div>
     </div>
   );

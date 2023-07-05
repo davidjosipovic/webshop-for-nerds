@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 // Retrieve all users
 const getAllUsers = async (req, res) => {
@@ -15,10 +16,13 @@ const createUser = async (req, res) => {
   const { username, email, password, shipping_address, billing_address } = req.body;
 
   try {
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await User.create({
       username,
       email,
-      password,
+      password: hashedPassword,
       shipping_address,
       billing_address,
     });
@@ -28,7 +32,6 @@ const createUser = async (req, res) => {
     res.status(500).json({ error: 'Failed to create user' });
   }
 };
-
 // Retrieve a specific user by ID
 const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -89,10 +92,28 @@ const deleteUserById = async (req, res) => {
   }
 };
 
+const getUserProfile = async (req, res) => {
+  // Assuming you have implemented user authentication and stored the user ID in the request
+  const userId = req.userId;
+
+  try {
+    const user = await User.findByPk(userId);
+
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve user profile' });
+  }
+};
+
 module.exports = {
   getAllUsers,
   createUser,
   getUserById,
   updateUserById,
   deleteUserById,
+  getUserProfile,
 };

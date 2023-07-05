@@ -10,6 +10,8 @@ router.get('/', userController.getAllUsers);
 // Route for creating a new user
 router.post('/', userController.createUser);
 
+router.get('/profile', userController.getUserProfile);
+
 // Route for retrieving a specific user
 router.get('/:id', userController.getUserById);
 
@@ -18,6 +20,8 @@ router.put('/:id', userController.updateUserById);
 
 // Route for deleting a specific user
 router.delete('/:id', userController.deleteUserById);
+
+
 
 module.exports = router;
 

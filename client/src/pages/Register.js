@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -6,6 +7,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [shippingAddress, setShippingAddress] = useState('');
   const [billingAddress, setBillingAddress] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +33,7 @@ const Register = () => {
         const data = await response.json();
         // Handle successful registration
         console.log('User registered:', data);
+        navigate('/profile');
       } else {
         // Handle registration error
         const errorData = await response.json();

@@ -1,16 +1,42 @@
 import React, { useState, useEffect } from 'react';
 
 const Profile = () => {
-  const [user] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Add logic to fetch user profile data from the server and update the "user" state
-    // For example:
-    // fetch('/api/user/profile')
-    //   .then((response) => response.json())
-    //   .then((data) => setUser(data))
-    //   .catch((error) => console.log(error));
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/user/profile');
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data);
+        } else {
+          console.log('Error fetching user profile:', response.status);
+        }
+      } catch (error) {
+        console.log('Error:', error);
+      }
+    };
+
+    fetchUserProfile();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/logout');
+      if (response.ok) {
+        // Clear user data and redirect to login page
+        setUser(null);
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = '/login';
+      } else {
+        console.log('Error logging out:', response.status);
+      }
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
+  
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -31,6 +57,12 @@ const Profile = () => {
             Billing Address:{' '}
             <span className="font-semibold">{user.billing_address}</span>
           </p>
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded font-semibold"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </div>
       ) : (
         <p>Loading user profile...</p>

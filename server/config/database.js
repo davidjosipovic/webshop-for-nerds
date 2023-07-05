@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 // Initialize Sequelize with the MySQL dialect
-const sequelize = new Sequelize('webshopfornerds', 'root', '1052001Zhondy', {
+const sequelize = new Sequelize('webshopfornerds', 'korisnik', 'Korisnik123', {
   host: 'localhost',
   dialect: 'mysql',
 });

@@ -1,8 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
+import { useNavigate,useLocation  } from 'react-router-dom';
 
 const Navbar = () => {
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoggedIn,setIsLoggedIn] = useState(
+    localStorage.getItem('isLoggedIn') === 'true'
+  ); // Add this line
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+  }, [location]);
+
+  const handleProfileClick = (e) => {
+    e.preventDefault();
+    
+    if (isLoggedIn) {
+      // User is logged in, redirect to the profile page
+      navigate('/profile');
+    } else {
+      // User is not logged in, redirect to the login page
+      navigate('/login');
+    }
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -45,7 +67,7 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
               {/* Add additional elements or actions */}
-              <a href="/profile" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
+              <a href="/profile" onClick={handleProfileClick} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</a>
               <a href="/cart" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cart</a>
             </div>
           </div>
