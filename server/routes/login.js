@@ -26,14 +26,13 @@ router.post('/', async (req, res) => {
     // Set the user ID in the session
     req.session.userId = user.id;
 
-    // Send success response
-    res.json({ message: 'Login successful' });
+    // Send success response with user ID
+    res.json({ message: 'Login successful', userId: user.id });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 // Logout route
 router.post('/logout', (req, res) => {
   // Destroy the session and clear the user ID

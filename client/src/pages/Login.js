@@ -27,7 +27,9 @@ const Login = () => {
         // Update the login status
         setIsLoggedIn(true);
         // Handle successful login
+        const data = await response.json()
         localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('userId', data.userId); // Save the user ID in localStorage
         console.log('User logged in');
       } else {
         // Handle login error
@@ -55,6 +57,19 @@ const Login = () => {
     };
 
     checkLoginStatus();
+  }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      setIsLoggedIn(false);
+      localStorage.removeItem('isLoggedIn');
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, []);
 
   if (isLoggedIn) {

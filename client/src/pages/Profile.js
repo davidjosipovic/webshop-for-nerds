@@ -7,6 +7,7 @@ const Profile = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch('http://localhost:3001/api/user/profile');
+
         if (response.ok) {
           const data = await response.json();
           setUser(data);
@@ -36,7 +37,6 @@ const Profile = () => {
       console.log('Error:', error);
     }
   };
-  
 
   return (
     <div className="flex justify-center items-center h-screen">
