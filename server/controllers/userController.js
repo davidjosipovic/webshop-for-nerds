@@ -92,22 +92,7 @@ const deleteUserById = async (req, res) => {
   }
 };
 
-const getUserProfile = async (req, res) => {
-  // Assuming you have implemented user authentication and stored the user ID in the request
-  const userId = req.userId;
 
-  try {
-    const user = await User.findByPk(userId);
-
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ error: 'User not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve user profile' });
-  }
-};
 
 module.exports = {
   getAllUsers,
@@ -115,5 +100,4 @@ module.exports = {
   getUserById,
   updateUserById,
   deleteUserById,
-  getUserProfile,
 };

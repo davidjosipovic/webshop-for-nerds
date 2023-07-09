@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,10 +28,11 @@ const Login = () => {
         // Update the login status
         setIsLoggedIn(true);
         // Handle successful login
-        const data = await response.json()
+        const data = await response.json();
         localStorage.setItem('isLoggedIn', true);
         localStorage.setItem('userId', data.userId); // Save the user ID in localStorage
         console.log('User logged in');
+        navigate('/profile'); // Redirect to the profile page
       } else {
         // Handle login error
         const errorData = await response.json();
@@ -62,7 +64,6 @@ const Login = () => {
   useEffect(() => {
     const handleBeforeUnload = () => {
       setIsLoggedIn(false);
-      localStorage.removeItem('isLoggedIn');
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);

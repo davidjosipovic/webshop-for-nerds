@@ -10,8 +10,6 @@ router.get('/', userController.getAllUsers);
 // Route for creating a new user
 router.post('/', userController.createUser);
 
-router.get('/profile', userController.getUserProfile);
-
 // Route for retrieving a specific user
 router.get('/:id', userController.getUserById);
 

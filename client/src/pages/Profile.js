@@ -6,8 +6,9 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/user/profile');
-
+        const userId = localStorage.getItem('userId'); // Get the user ID from localStorage
+        const response = await fetch(`http://localhost:3001/api/users/${userId}`);
+  
         if (response.ok) {
           const data = await response.json();
           setUser(data);
@@ -18,9 +19,10 @@ const Profile = () => {
         console.log('Error:', error);
       }
     };
-
+  
     fetchUserProfile();
   }, []);
+  
 
   const handleLogout = async () => {
     try {
