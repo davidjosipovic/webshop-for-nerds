@@ -24,21 +24,14 @@ const Profile = () => {
   }, []);
   
 
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/logout');
-      if (response.ok) {
-        // Clear user data and redirect to login page
-        setUser(null);
-        localStorage.removeItem('isLoggedIn');
-        window.location.href = '/login';
-      } else {
-        console.log('Error logging out:', response.status);
-      }
-    } catch (error) {
-      console.log('Error:', error);
-    }
+  const handleLogout = () => {
+    // Clear user data and redirect to login page
+    setUser(null);
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userId');
+    window.location.href = '/login';
   };
+  
 
   return (
     <div className="flex justify-center items-center h-screen">
