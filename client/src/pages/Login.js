@@ -5,6 +5,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -36,7 +37,7 @@ const Login = () => {
       } else {
         // Handle login error
         const errorData = await response.json();
-        console.log('Login error:', errorData);
+        setLoginError(errorData.error);
       }
     } catch (error) {
       // Handle network or other errors
@@ -81,6 +82,7 @@ const Login = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="w-1/3 bg-white rounded shadow p-8">
         <h2 className="text-2xl font-bold mb-4">Login</h2>
+        {loginError && <div className="text-red-500 mb-4">{loginError}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block font-semibold">

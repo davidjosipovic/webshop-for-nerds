@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -8,7 +9,7 @@ const Profile = () => {
       try {
         const userId = localStorage.getItem('userId'); // Get the user ID from localStorage
         const response = await fetch(`http://localhost:3001/api/users/${userId}`);
-  
+
         if (response.ok) {
           const data = await response.json();
           setUser(data);
@@ -19,10 +20,9 @@ const Profile = () => {
         console.log('Error:', error);
       }
     };
-  
+
     fetchUserProfile();
   }, []);
-  
 
   const handleLogout = () => {
     // Clear user data and redirect to login page
@@ -31,7 +31,6 @@ const Profile = () => {
     localStorage.removeItem('userId');
     window.location.href = '/login';
   };
-  
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -52,6 +51,11 @@ const Profile = () => {
             Billing Address:{' '}
             <span className="font-semibold">{user.billing_address}</span>
           </p>
+          <Link to="/editprofile">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded font-semibold mb-4">
+              Edit
+            </button>
+          </Link>
           <button
             className="bg-red-500 text-white px-4 py-2 rounded font-semibold"
             onClick={handleLogout}

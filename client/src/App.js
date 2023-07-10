@@ -14,6 +14,7 @@ import ProductDetails from './pages/ProductDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { CartProvider } from './context/CartContext';
+import EditProfile from './pages/EditProfile';
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/editprofile" element={<EditProfile />} />
+          
         </Routes>
         <Footer />
       </Router>
