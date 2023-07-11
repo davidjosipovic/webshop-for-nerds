@@ -33,7 +33,7 @@ const Register = () => {
         const data = await response.json();
         // Handle successful registration
         console.log('User registered:', data);
-        navigate('/profile');
+        navigate('/login');
       } else {
         // Handle registration error
         const errorData = await response.json();
