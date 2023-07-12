@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
     res.json({ message: 'Login successful', userId: user.user_id });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal error' }); // Internal server error
   }
 });
 // Logout route
