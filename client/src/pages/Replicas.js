@@ -28,16 +28,15 @@ const Replicas = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {products.map((product) => (
           <Link key={product.product_id} to={`/product/${product.product_id}`}>
-            <div className="bg-white rounded-lg shadow-md p-4">
+            <div className="bg-white rounded-lg shadow-md flex flex-col h-full p-4">
               <img
                 src={`http://localhost:3001/images/${product.image_url}`}
                 alt={product.name}
-                className="w-full mb-4"
+                className="w-full mb-4 object-cover"
               />
               <h2 className="text-lg font-bold mb-2">{product.name}</h2>
               <p className="text-gray-600">{product.description}</p>
-          <p className="text-lg font-bold mt-4">{product.price}€</p>
-
+              <p className="text-lg font-bold mt-auto">{product.price}€</p>
             </div>
           </Link>
         ))}
