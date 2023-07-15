@@ -34,7 +34,7 @@ const Cart = () => {
     <div>
       <h2 className="text-2xl font-bold mb-4">Cart</h2>
       {cartItems.length === 0 ? (
-        <p className="text-gray-600">Your cart is empty.</p>
+        <p className="text-gray-600">Your cart is empty. Fill it</p>
       ) : (
         <>
           {cartItems.map((item) => (
