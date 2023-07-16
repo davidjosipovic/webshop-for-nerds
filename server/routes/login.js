@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
 router.post('/logout', (req, res) => {
   // Destroy the session and clear the user ID
   req.session.destroy();
-  res.json({ message: 'Logout successful' });
+  res.json({ message: 'Logout not unsuccessful' }); // Logout successful
 });
 
 // Check if the user is logged in
