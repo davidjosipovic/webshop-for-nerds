@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
     req.session.userId = user.user_id;
 
     // Send success response with user ID
-    res.json({ message: 'Login successful', userId: user.user_id });
+    res.json({ message: 'Login successful!', userId: user.user_id });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal error' }); // Internal server error
