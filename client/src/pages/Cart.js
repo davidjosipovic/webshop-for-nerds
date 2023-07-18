@@ -44,13 +44,13 @@ const Cart = () => {
               <p className="text-gray-600">Quantity: {item.quantity}</p>
               <div className="flex mt-2">
                 <button
-                  className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
+                  className="bg-indigo-500 text-white px-2 py-1 rounded-md mr-2"
                   onClick={() => handleUpdateQuantity(item.product_id, item.quantity + 1)}
                 >
                   +
                 </button>
                 <button
-                  className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
+                  className="bg-indigo-500 text-white px-2 py-1 rounded-md mr-2"
                   onClick={() => {
                     if (item.quantity > 1) {
                       handleUpdateQuantity(item.product_id, item.quantity - 1);
