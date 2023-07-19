@@ -1,13 +1,11 @@
-import React, { useEffect,useState } from 'react';
-import { useNavigate,useLocation  } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLoggedIn,setIsLoggedIn] = useState(
-    localStorage.getItem('isLoggedIn') === 'true'
-  ); // Add this line
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +14,7 @@ const Navbar = () => {
 
   const handleProfileClick = (e) => {
     e.preventDefault();
-    
+
     if (isLoggedIn) {
       // User is logged in, redirect to the profile page
       navigate('/profile');
@@ -34,6 +32,13 @@ const Navbar = () => {
     setSearchQuery(event.target.value);
   };
 
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    // Redirect to the search page with the search query as a query parameter
+    navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+    setSearchQuery('');
+  };
+
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,19 +53,27 @@ const Navbar = () => {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 {/* Add the search input */}
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="text-gray-300 bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-md text-sm font-medium"
-                />
+                <form onSubmit={handleSearchSubmit}>
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className="text-gray-300 bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-md text-sm font-medium"
+                  />
+                  <button
+                    type="submit"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Search
+                  </button>
+                </form>
                 {/* Add your navbar links */}
-                <a href='/figures' className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Figures</a>
-                <a href='/posters'className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Posters</a>
-                <a href='/replicas' className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Replicas</a>
-                <a href='/accessories' className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Accessories</a>
-                <a href='/plushies' className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Plushies</a>
+                <a href="/figures" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Figures</a>
+                <a href="/posters" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Posters</a>
+                <a href="/replicas" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Replicas</a>
+                <a href="/accessories" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Accessories</a>
+                <a href="/plushies" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Plushies</a>
               </div>
             </div>
           </div>
@@ -99,11 +112,11 @@ const Navbar = () => {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {/* Mobile navbar links */}
-              <a href='/figures' className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Figures</a>
-              <a href='/posters' className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Posters</a>
-              <a href='/replicas' className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Replicas</a>
-              <a href='/accessories' className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Accessories</a>
-              <a href='/plushies' className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Plushies</a>
+              <a href="/figures" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Figures</a>
+              <a href="/posters" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Posters</a>
+              <a href="/replicas" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Replicas</a>
+              <a href="/accessories" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Accessories</a>
+              <a href="/plushies" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Plushies</a>
             </div>
           </div>
         )}

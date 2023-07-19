@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { CartProvider } from './context/CartContext';
 import EditProfile from './pages/EditProfile';
+import SearchPage from './pages/SearchPage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/editprofile" element={<EditProfile />} />
+          <Route path="/search" element={<SearchPage/>} />
           
         </Routes>
         <Footer />

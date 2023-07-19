@@ -26,6 +26,7 @@ const orderRoutes = require('./routes/orderRoutes');
 const userRoutes = require('./routes/userRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const searchRouter = require('./routes/search');
 
 app.use('/login', loginRoute);
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -34,6 +35,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/category', categoryRoutes);
+app.use('/api/search', searchRouter);
 
 // Other server configurations and middleware
 
