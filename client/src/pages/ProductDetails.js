@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams,useNavigate  } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import ReviewForm from '../components/ReviewForm';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -37,6 +38,28 @@ const ProductDetails = () => {
     navigate('/cart'); // Navigate to the cart page after adding an item
   };
 
+  const handleReviewSubmit = async (newReview) => {
+    try {
+      // Send the new review to the backend for storage
+      const response = await fetch('http://localhost:3001/api/reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newReview),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit review');
+      }
+
+      // Refresh the reviews after adding a new one
+      fetchProductReviews();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -58,6 +81,10 @@ const ProductDetails = () => {
           </button>
         </div>
       </div>
+
+      {/* Move the review form here, below everything else */}
+      <h2 className="text-2xl font-bold my-4">Leave a Review</h2>
+      <ReviewForm productId={id} onReviewSubmit={handleReviewSubmit} />
     </div>
   );
 };
