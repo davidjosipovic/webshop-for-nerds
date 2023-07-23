@@ -65,6 +65,7 @@ const ProductDetails = () => {
   }
 
   
+  
   if (error) {
     return <div>Error: {error}</div>;
   }
