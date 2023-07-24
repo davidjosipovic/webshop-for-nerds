@@ -51,6 +51,7 @@ const ProductDetails = () => {
 
       if (!response.ok) {
         throw new Error('Failed to submit review');
+        
       }
 
       // Refresh the reviews after adding a new one
@@ -65,7 +66,7 @@ const ProductDetails = () => {
   }
 
   
-  
+
   if (error) {
     return <div>Error: {error}</div>;
   }
