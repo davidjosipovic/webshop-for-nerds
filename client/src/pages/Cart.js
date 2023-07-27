@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const { cartItems, updateQuantity, removeItem, clearCart } = useContext(CartContext);
@@ -16,13 +17,6 @@ const Cart = () => {
     clearCart();
   };
 
-  const handleCheckout = () => {
-    // Perform the checkout process
-    console.log('Checkout');
-    // You can implement the necessary logic here, such as making an API request, handling payment, etc.
-    // After a successful checkout, you may want to clear the cart or show a success message.
-    clearCart();
-  };
 
   // Calculate the total price
   const totalPrice = cartItems.reduce(
@@ -77,12 +71,9 @@ const Cart = () => {
           >
             Clear Cart
           </button>
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded-md mt-4 ml-4"
-            onClick={handleCheckout}
-          >
-            Checkout
-          </button>
+          <Link to="/checkout">
+        <button className="bg-green-500 text-white px-4 py-2 rounded-md mt-4">Checkout</button>
+      </Link>
         </>
       )}
     </div>

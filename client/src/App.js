@@ -16,6 +16,8 @@ import Register from './pages/Register';
 import { CartProvider } from './context/CartContext';
 import EditProfile from './pages/EditProfile';
 import SearchPage from './pages/SearchPage';
+import CheckoutSuccess from './components/CheckoutSuccess';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/editprofile" element={<EditProfile />} />
           <Route path="/search" element={<SearchPage/>} />
+          <Route path="/checkout" element={<Checkout/>} />
+          <Route path="/checkout-success" element={<CheckoutSuccess/>} />
           
         </Routes>
         <Footer />

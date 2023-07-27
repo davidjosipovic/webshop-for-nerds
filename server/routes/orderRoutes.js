@@ -19,5 +19,8 @@ router.put('/:id', orderController.updateOrderById);
 // Route for deleting a specific order
 router.delete('/:id', orderController.deleteOrderById);
 
+// Route for checkout
+router.post('/checkout', orderController.checkout);
+
 module.exports = router;
 

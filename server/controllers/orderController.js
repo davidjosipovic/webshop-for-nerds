@@ -12,15 +12,15 @@ const getAllOrders = async (req, res) => {
 
 // Create a new order
 const createOrder = async (req, res) => {
-  const { userId, products, totalAmount, shippingAddress, billingAddress, status } = req.body;
+  const { userId, products, totalPrice, shippingAddress, billingAddress, status } = req.body;
 
   try {
     const order = await Order.create({
-      userId,
-      products,
-      totalAmount,
-      shippingAddress,
-      billingAddress,
+      user_id: userId,
+      products: JSON.stringify(products),
+      total_amount: totalPrice,
+      shipping_address: shippingAddress,
+      billing_address: billingAddress,
       status,
     });
 
@@ -91,12 +91,52 @@ const deleteOrderById = async (req, res) => {
   }
 };
 
+// Function to generate a unique order ID
+const generateOrderId = () => {
+  const timestamp = Date.now().toString();
+  const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  const orderId = `${timestamp}-${randomNum}`;
+  return orderId;
+};
+
+// Checkout
+const checkout = async (req, res) => {
+  const { cartItems, totalPrice, shippingAddress, billingAddress, userId } = req.body;
+
+  try {
+    const order_id = generateOrderId();
+    const products = JSON.stringify(cartItems);
+
+    // Check if the totalPrice is defined and not null
+    if (typeof totalPrice !== 'undefined' && totalPrice !== null) {
+      const order = await Order.create({
+        order_id,
+        user_id: userId,
+        products,
+        total_amount: totalPrice, // Set the total_amount to the totalPrice
+        shipping_address: shippingAddress,
+        billing_address: billingAddress,
+        status: 'Pending',
+        created_at: new Date(),
+      });
+
+      res.status(201).json(order);
+    } else {
+      throw new Error('Total price is not defined');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to create order' });
+  }
+};
+
+
+
 module.exports = {
   getAllOrders,
   createOrder,
   getOrderById,
   updateOrderById,
   deleteOrderById,
+  checkout,
 };
-
-
