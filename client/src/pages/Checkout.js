@@ -1,129 +1,79 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 
 const Checkout = () => {
-    const { cartItems, totalPrice, clearCart } = useContext(CartContext);
-    const [shippingAddress, setShippingAddress] = useState('');
-    const [billingAddress, setBillingAddress] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const navigate = useNavigate();
+  const { cartItems, totalPrice } = useContext(CartContext);
+
+  // Function to handle the payment confirmation (You can implement your payment logic here)
+  const handlePaymentConfirmation = () => {
+    // Calculate the totalPrice based on cartItems
+    const totalPrice = cartItems.reduce(
+      (total, item) => total + parseFloat(item.price) * item.quantity,
+      0
+    );
   
-    // Check if the user is logged in based on the value in localStorage
-    useEffect(() => {
-      const isLoggedInValue = localStorage.getItem('isLoggedIn');
-      setIsLoggedIn(isLoggedInValue === 'true');
-    }, []);
+    // Make sure totalPrice is a number
+    const formattedTotalPrice = totalPrice.toFixed(2);
   
-    // If the user is logged in, fetch their shipping and billing addresses from the server
-    useEffect(() => {
-      if (isLoggedIn) {
-        // Make an API request to fetch user details (shipping and billing addresses)
-        // Update the state with the fetched addresses
-        setShippingAddress('User Shipping Address'); // Replace with API call to get the user's shipping address
-        setBillingAddress('User Billing Address'); // Replace with API call to get the user's billing address
-      }
-    }, [isLoggedIn]);
-  
-    // Handle the checkout process
-   
-        const handleCheckout = async () => {
-          try {
-            // Prepare the data for checkout
-            let checkoutData = {
-              userId: null,
-              cartItems: cartItems,
-              totalPrice: totalPrice,
-              shippingAddress: '',
-              billingAddress: '',
-            };
-      
-            if (isLoggedIn) {
-              // If the user is logged in, set the userId and fetch shipping and billing addresses
-              checkoutData.userId = localStorage.getItem('userId');
-              checkoutData.shippingAddress = shippingAddress;
-              checkoutData.billingAddress = billingAddress;
-            } else {
-              // If the user is not logged in, get the shipping and billing addresses from the input fields
-              const shippingAddressInput = document.getElementById('shippingAddress');
-              const billingAddressInput = document.getElementById('billingAddress');
-              if (shippingAddressInput && billingAddressInput) {
-                checkoutData.shippingAddress = shippingAddressInput.value;
-                checkoutData.billingAddress = billingAddressInput.value;
-              }
-            }
-      
-            // Make the API request to checkout
-            const response = await fetch('http://localhost:3001/api/orders/checkout', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(checkoutData),
-            });
-  
-        if (response.ok) {
-          // Clear the cart after a successful checkout
-          clearCart();
-  
-          // Redirect to a success page or show a success message
-          navigate('/checkout-success');
-        } else {
-          console.error('Failed to checkout');
-        }
-      } catch (error) {
-        console.error(error);
-      }
+    // Prepare the request body with necessary data
+    const requestBody = {
+      cartItems: cartItems,
+      totalPrice: formattedTotalPrice,
+      shippingAddress: 'Your Shipping Address',
+      billingAddress: 'Your Billing Address',
+      userId: 'Your User ID',
     };
+    // Make a POST request to your backend's /checkout route
+    fetch('/api/orders/checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response from the backend, e.g., show a success message, redirect to order success page, etc.
+        console.log('Order created:', data);
+        // Example: Show a success message to the user
+        alert('Payment successful! Your order has been placed.');
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the payment process
+        console.error('Error while processing payment:', error);
+        // Example: Show an error message to the user
+        alert('Payment failed. Please try again later.');
+      });
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div>
       <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-      {/* If the user is logged in, display their shipping and billing addresses */}
-      {isLoggedIn && (
-        <div>
-          <h3 className="text-xl font-bold mb-2">Shipping Address:</h3>
-          <p>{shippingAddress}</p>
-          <h3 className="text-xl font-bold mt-4 mb-2">Billing Address:</h3>
-          <p>{billingAddress}</p>
-        </div>
-      )}
-      {/* If the user is not logged in, display input fields for shipping and billing addresses */}
-      {!isLoggedIn && (
-        <div>
-          <label htmlFor="shippingAddress" className="block font-bold mb-2">
-            Shipping Address:
-          </label>
-          <input
-            type="text"
-            id="shippingAddress"
-            className="border border-gray-400 rounded w-full py-2 px-3 mb-4"
-            placeholder="Enter your shipping address"
-            value={shippingAddress}
-            onChange={(e) => setShippingAddress(e.target.value)}
-          />
+      {cartItems.length === 0 ? (
+        <p className="text-gray-600">Your cart is empty. Fill it</p>
+      ) : (
+        <>
+          {/* Show cart items and order details for payment */}
+          {cartItems.map((item) => (
+            <div key={item.id} className="border border-gray-200 p-4 mb-4">
+              <h3 className="text-xl font-bold mb-2">{item.name}</h3>
+              <p className="text-gray-600">Price: {item.price}€</p>
+              <p className="text-gray-600">Quantity: {item.quantity}</p>
+            </div>
+          ))}
+          <div className="mt-4">
+            <h3 className="text-lg font-bold">Total Price: {totalPrice.toFixed(2)}€</h3>
+          </div>
 
-          <label htmlFor="billingAddress" className="block font-bold mb-2">
-            Billing Address:
-          </label>
-          <input
-            type="text"
-            id="billingAddress"
-            className="border border-gray-400 rounded w-full py-2 px-3 mb-4"
-            placeholder="Enter your billing address"
-            value={billingAddress}
-            onChange={(e) => setBillingAddress(e.target.value)}
-          />
-        </div>
+          {/* Button to confirm payment */}
+          <button
+            className="bg-green-500 text-white px-4 py-2 rounded-md mt-4"
+            onClick={handlePaymentConfirmation}
+          >
+            Confirm Payment
+          </button>
+        </>
       )}
-      {/* Display the cart items and total price */}
-      {/* ... (your existing cart items and total price display code) */}
-      <button
-        className="bg-green-500 text-white px-4 py-2 rounded-md mt-4"
-        onClick={handleCheckout}
-      >
-        Checkout
-      </button>
     </div>
   );
 };
