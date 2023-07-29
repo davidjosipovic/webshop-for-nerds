@@ -22,6 +22,7 @@ const Checkout = () => {
       shippingAddress: 'Your Shipping Address',
       billingAddress: 'Your Billing Address',
       userId: 'Your User ID',
+      
     };
     // Make a POST request to your backend's /checkout route
     fetch('/api/orders/checkout', {
