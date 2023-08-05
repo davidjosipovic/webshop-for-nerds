@@ -39,6 +39,7 @@ const Plushies = () => {
               <p className="text-gray-600">{product.description}</p>
           <p className="text-lg font-bold mt-4">{product.price}€</p>
 
+
             </div>
           </Link>
         ))}
